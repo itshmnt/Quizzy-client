@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Questions from './Questions';
+import { useSelector } from 'react-redux';
 
 export default function Quiz() {
+
+    // const { questions } = useSelector(state => state)
+    const questions = useSelector(state => state.questions) // considering for performance optimisation
+
+    useEffect(() => {
+        console.log(questions);
+    })
 
     function onNext(){
         console.log('Next');
