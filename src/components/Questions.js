@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useFetchQuestion } from '../hooks/FetchQuestion';
 import { useSelector } from 'react-redux';
 
-export default function Questions() {
+export default function Questions(props) {
 
     const[checked, isChecked] = useState(undefined);
     
@@ -14,8 +14,9 @@ export default function Questions() {
         // console.log(questions);
     })
 
-    function onSelect(){
-        // console.log("RadioSelect");
+    function onSelect(i){
+        console.log("RadioSelect");
+        props.onChecked(i);
     }
 
     if(isLoading) return <h3 className='text-light'>Loading...</h3>
@@ -34,7 +35,7 @@ export default function Questions() {
                             value={false}
                             name="options"
                             id={`q${i}-option`}
-                            onChange={onSelect()}
+                            onChange={() => onSelect(i)}
                         />
                         <label className='text-primary' htmlFor={`q${i}-option`}>{q}</label>
                         <div className='check'></div>
