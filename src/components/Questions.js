@@ -9,9 +9,9 @@ export default function Questions(props) {
     
     const [{isLoading, apiData, serverError}, setGetData] = useFetchQuestion();
 
+    const result = useSelector(state => state.result.result);
     const questions = useSelector(state => state.questions.queue[state.questions.trace])
     const { trace } = useSelector(state => state.questions);
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,6 +22,8 @@ export default function Questions(props) {
         console.log("RadioSelect");
         props.onChecked(i);
         setChecked(i);
+        dispatch(updateResult({trace, checked}));
+
     }
 
     if(isLoading) return <h3 className='text-light'>Loading...</h3>
@@ -43,7 +45,7 @@ export default function Questions(props) {
                             onChange={() => onSelect(i)}
                         />
                         <label className='text-primary' htmlFor={`q${i}-option`}>{q}</label>
-                        <div className='check'></div>
+                        <div className={`check ${result[trace] == i ? 'checked' : ''}`}></div>
                     </li>
                 ))
             }

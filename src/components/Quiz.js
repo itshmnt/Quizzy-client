@@ -32,6 +32,9 @@ export default function Quiz() {
                 dispatch(PushAnswer(check));
             }
         }
+
+        // RESET THE CHECK state
+        setCheck(undefined);
     }
 
     function onPrev(){
@@ -56,7 +59,7 @@ export default function Quiz() {
         <Questions onChecked={onChecked}/>
 
         <div className='grid'>
-            <button className='btn prev' onClick={onPrev}>Prev</button>
+            {trace > 0 ? <button className='btn prev' onClick={onPrev}>Prev</button> : <div></div>}
             <button className='btn next' onClick={onNext}>Next</button>
         </div>
 
