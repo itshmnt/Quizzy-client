@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useFetchQuestion } from '../hooks/FetchQuestion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateResult } from '../hooks/setResult';
 
 export default function Questions(props) {
 
-    const[checked, isChecked] = useState(undefined);
+    const[checked, setChecked] = useState(undefined);
     
     const [{isLoading, apiData, serverError}, setGetData] = useFetchQuestion();
 
     const questions = useSelector(state => state.questions.queue[state.questions.trace])
+    const { trace } = useSelector(state => state.questions);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        // console.log(questions);
-    })
+        dispatch(updateResult({trace, checked}));
+    }, [checked])
 
     function onSelect(i){
         console.log("RadioSelect");
         props.onChecked(i);
+        setChecked(i);
     }
 
     if(isLoading) return <h3 className='text-light'>Loading...</h3>

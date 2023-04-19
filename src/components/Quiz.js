@@ -20,14 +20,17 @@ export default function Quiz() {
     const state = useSelector(state => state)
 
     useEffect(() => {
-        console.log( "state is ", state);
+        console.log( "result array is ", state.result.result);
     })
 
     function onNext(){
         console.log("Next clicked");
         if(trace < queue.length){
             dispatch(MoveNextQuestion());
-            dispatch(PushAnswer(check));
+            // insert a new result in result array
+            if(result.length <= trace) {
+                dispatch(PushAnswer(check));
+            }
         }
     }
 
