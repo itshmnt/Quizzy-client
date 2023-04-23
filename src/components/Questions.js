@@ -19,7 +19,6 @@ export default function Questions(props) {
     }, [checked])
 
     function onSelect(i){
-        console.log("RadioSelect");
         props.onChecked(i);
         setChecked(i);
         dispatch(updateResult({trace, checked}));

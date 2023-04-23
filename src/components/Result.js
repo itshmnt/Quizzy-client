@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetAllAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
 import { attemptsNumber, earnedPointsCalc, flagResult } from '../helper/helper';
+import { usePublishResult } from '../hooks/setResult';
 
 export default function Result() {
 
@@ -14,15 +15,18 @@ export default function Result() {
 
     const {questions: {queue, answers}, result: {result, userId}} = useSelector(state => state);
 
-    useEffect(() => {
-        console.log("from res comp ", result);
-        console.log(flag);
-    });
+    // useEffect(() => {
+    //     console.log("from res comp ", result);
+    //     console.log(flag);
+    // });
 
     const totalPoints = queue.length * 10;
     const attempts = attemptsNumber(result);
     const earnedPoints = earnedPointsCalc(result, answers, 10);
     const flag = flagResult(totalPoints, earnedPoints);
+
+    // Store user result to database
+    usePublishResult({ result, username : userId, attempts, points : earnedPoints, achived : flag ? "Passed" : "Failed" })
 
     function onRestart () {
         console.log('Restart button clicked');
@@ -36,7 +40,7 @@ export default function Result() {
         <div className='result flex-center'>
             <div className='flex'>
                 <span>Username</span>
-                <span className='bold'> Daily Quiz</span>
+                <span className='bold'>{userId}</span>
             </div>
             <div className='flex'>
                 <span>Total Quiz Points : </span>

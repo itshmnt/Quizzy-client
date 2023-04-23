@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import Questions from './Questions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,18 +14,7 @@ export default function Quiz() {
 
     // useSelector(state => console.log(state)) // considering for performance optimisation
 
-    // useEffect(() => {
-    //    console.log(state);
-    // })
-
-    const state = useSelector(state => state)
-
-    useEffect(() => {
-        console.log( "result array is ", state.result.result);
-    })
-
     function onNext(){
-        console.log("Next clicked");
         if(trace < queue.length){
             dispatch(MoveNextQuestion());
             // insert a new result in result array
@@ -39,13 +28,11 @@ export default function Quiz() {
     }
 
     function onPrev(){
-        console.log('Prev clicked');
         if(trace > 0) dispatch(MovePrevQuestion());
     }
 
     function onChecked(idx) {
         setCheck(idx);
-        console.log(result);
     }
 
     // Finish exam after the last question
